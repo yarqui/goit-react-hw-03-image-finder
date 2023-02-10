@@ -6,10 +6,15 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-const Searchbar = () => {
+const Searchbar = ({ onSubmit, children }) => {
+  const handleFormSubmit = e => {
+    e.preventDefault();
+    console.log('e.currentTarget:', e.currentTarget.value);
+  };
+
   return (
     <SearchBarHeader>
-      <SearchForm>
+      <SearchForm onSubmit={handleFormSubmit}>
         <SearchFormButton type="submit">
           <SearchFormButtonLabel>Search</SearchFormButtonLabel>
         </SearchFormButton>
