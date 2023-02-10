@@ -6,10 +6,16 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-const Searchbar = ({ onSubmit, children }) => {
+const Searchbar = ({ onSubmit }) => {
   const handleFormSubmit = e => {
     e.preventDefault();
-    console.log('e.currentTarget:', e.currentTarget.value);
+
+    const form = e.currentTarget;
+    const searchQuery = form.elements.search.value;
+
+    onSubmit(searchQuery);
+
+    form.reset();
   };
 
   return (
@@ -20,6 +26,7 @@ const Searchbar = ({ onSubmit, children }) => {
         </SearchFormButton>
 
         <SearchFormInput
+          name="search"
           type="text"
           autoComplete="off"
           autoFocus
