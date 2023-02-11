@@ -10,4 +10,5 @@ export const Gallery = styled.ul`
   padding: 0;
   list-style: none;
   margin-left: auto;
+  margin-right: auto;
 `;

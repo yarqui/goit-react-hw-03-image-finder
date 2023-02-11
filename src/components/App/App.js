@@ -2,7 +2,6 @@ import { PureComponent } from 'react';
 import { Box } from 'components/App/App.styled';
 import Searchbar from 'components/Searchbar';
 import ImageGallery from 'components/ImageGallery';
-import Modal from 'components/Modal';
 import * as API from 'services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +12,7 @@ export default class App extends PureComponent {
     query: '',
     isLoading: false,
     pictures: [],
+    isVisible: false,
   };
 
   // componentDidMount() {
@@ -31,7 +31,7 @@ export default class App extends PureComponent {
     }
   }
 
-  handleSubmit = searchQuery => {
+  onSubmit = searchQuery => {
     const { query } = this.state;
 
     if (searchQuery === query) {
@@ -41,18 +41,16 @@ export default class App extends PureComponent {
     this.setState({ query: searchQuery });
   };
 
-  handleImgZoom = () => {};
-
   render() {
     const { pictures } = this.state;
     return (
       <Box>
-        <Searchbar onSubmit={this.handleSubmit}></Searchbar>
+        <Searchbar onSubmit={this.onSubmit}></Searchbar>
 
         <ImageGallery pictures={pictures}></ImageGallery>
 
         <ToastContainer theme="dark" autoClose={1500} position="top-left" />
-        <Modal></Modal>
+        {/* <Modal></Modal> */}
       </Box>
     );
   }

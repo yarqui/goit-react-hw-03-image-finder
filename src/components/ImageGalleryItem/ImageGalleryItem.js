@@ -1,12 +1,33 @@
-import { Item, ItemImage } from './ImageGalleryItem.styled';
+import Modal from 'components/Modal';
+import { PureComponent } from 'react';
+import { ItemImage } from './ImageGalleryItem.styled';
+import { Item } from './ImageGalleryItem.styled';
 
-const GalleryItem = ({ pictures }) =>
-  pictures.map(({ id, webformatURL, largeImageURL, tags }) => {
+class GalleryItem extends PureComponent {
+  state = {
+    isModalOpen: false,
+  };
+
+  showModal = () => {
+    this.setState({ isModalOpen: true });
+  };
+
+  render() {
+    const { pictures } = this.props;
+    const { isModalOpen } = this.state;
     return (
-      <Item key={id}>
-        <ItemImage src={webformatURL} alt={tags} />
-      </Item>
+      <>
+        {pictures.map(({ id, webformatURL, tags, largeImageURL }) => {
+          return (
+            <Item key={id} onClick={this.showModal()}>
+              <ItemImage id={id} src={webformatURL} alt={tags} />
+              {isModalOpen && <Modal src={largeImageURL}></Modal>}
+            </Item>
+          );
+        })}
+      </>
     );
-  });
+  }
+}
 
 export default GalleryItem;
