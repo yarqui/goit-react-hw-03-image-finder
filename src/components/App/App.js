@@ -1,9 +1,8 @@
 import { PureComponent } from 'react';
 import { Box } from 'components/App/App.styled';
 import Searchbar from 'components/Searchbar';
-
 import ImageGallery from 'components/ImageGallery';
-import GalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import Modal from 'components/Modal';
 import * as API from 'services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,23 +12,24 @@ export default class App extends PureComponent {
     page: 1,
     query: '',
     isLoading: false,
+    pictures: [],
   };
 
   // componentDidMount() {
   // }
 
-  componentDidUpdate() {
+  async componentDidUpdate(_, prevState) {
     console.log('componentDidUpdate');
-    // this.handleRender();
+    const { query, page } = this.state;
+
+    if (prevState.page !== page || prevState.query !== query) {
+      const { hits } = await API.getPics(query);
+
+      this.setState(() => {
+        return { pictures: hits };
+      });
+    }
   }
-
-  // handleRender = () => {
-  //   const { query } = this.state;
-
-  //   const pictures = API.getPics(query).then(({ hits }) => {
-  //     console.log('hits:', hits);
-  //   });
-  // };
 
   handleSubmit = searchQuery => {
     const { query } = this.state;
@@ -38,22 +38,21 @@ export default class App extends PureComponent {
       return toast.warn('It seems to be the same search');
     }
 
-    //!!!!!!!!!!!!!!!!!!!!!!
-    // МОЖЛИВО ПЕРЕД СЕТСТЕЙТОМ КВЕРІ ,СЛІД ЗРОБИТИ ФЕТЧ, ОТРИМАТИ ХІТС, І ВЖЕ РАХОМ ЗАПИСАТИ В СТЕЙТ ХІТС ТА КВЕРІ
-    //!!!!!!!!!!!!!!!!!!
-
     this.setState({ query: searchQuery });
   };
 
+  handleImgZoom = () => {};
+
   render() {
+    const { pictures } = this.state;
     return (
       <Box>
         <Searchbar onSubmit={this.handleSubmit}></Searchbar>
 
-        <ImageGallery>
-          <GalleryItem></GalleryItem>
-        </ImageGallery>
+        <ImageGallery pictures={pictures}></ImageGallery>
+
         <ToastContainer theme="dark" autoClose={1500} position="top-left" />
+        <Modal></Modal>
       </Box>
     );
   }

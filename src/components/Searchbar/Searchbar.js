@@ -11,9 +11,9 @@ const Searchbar = ({ onSubmit }) => {
     e.preventDefault();
 
     const form = e.currentTarget;
-    const searchQuery = form.elements.search.value;
+    const normalizedQuery = form.elements.search.value.trim().toLowerCase();
 
-    onSubmit(searchQuery);
+    onSubmit(normalizedQuery);
 
     form.reset();
   };

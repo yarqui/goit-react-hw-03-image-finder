@@ -17,6 +17,7 @@ export const getPics = async query => {
       return toast.error(`Sorry, there are no pictures with search "${query}"`);
     }
 
+    console.log('dataInAPI:', data);
     return data;
   } catch (error) {
     console.log('error.name: ', error.name, 'error.message: ', error.message);
