@@ -53,7 +53,7 @@ export default class App extends PureComponent {
             });
           }
 
-          if (page >= totalPages) {
+          if (page >= totalPages && totalPages !== 0) {
             toast.info("You've reached the end of the search", {
               position: toast.POSITION.BOTTOM_CENTER,
             });
