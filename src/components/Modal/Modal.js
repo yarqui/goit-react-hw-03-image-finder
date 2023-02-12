@@ -1,13 +1,15 @@
 import { ModalStyled, Overlay } from './Modal.styled';
-//
-//ЗУПИНИВСЯ НА ТОМУ, ЩО МОДАЛКА ОДРАЗУ ВІДКРИВАЄТЬСЯ, НАВІТЬ НЕ МОДАЛКА, А ОВЕРЛЕЙ.
-// ПОМИЛКИ....
-//
-//
-const Modal = () => {
+
+const Modal = ({ url, onCloseClick, tags }) => {
   return (
     <Overlay>
-      <ModalStyled>This is modal</ModalStyled>
+      <ModalStyled>
+        <img src={url} alt={tags} />
+        This is modal
+        <button type="button" onClick={onCloseClick}>
+          Close
+        </button>
+      </ModalStyled>
     </Overlay>
   );
 };

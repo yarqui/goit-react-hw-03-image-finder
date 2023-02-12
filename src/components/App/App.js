@@ -12,7 +12,6 @@ export default class App extends PureComponent {
     query: '',
     isLoading: false,
     pictures: [],
-    isVisible: false,
   };
 
   // componentDidMount() {
@@ -23,11 +22,28 @@ export default class App extends PureComponent {
     const { query, page } = this.state;
 
     if (prevState.page !== page || prevState.query !== query) {
-      const { hits } = await API.getPics(query);
+      // const { hits, total } = await API.getPics(query).then(
+      await API.getPics(query)
+        .then(({ data, status }) => {
+          const { total, hits } = data;
 
-      this.setState(() => {
-        return { pictures: hits };
-      });
+          if (total === 0) {
+            return toast.error(
+              `Sorry, there are no pictures with search "${query}"`
+            );
+          }
+
+          if (status !== 200) {
+            return toast.error(`Sorry, something went wrong. Try again later`);
+          }
+
+          this.setState(() => {
+            return { pictures: hits };
+          });
+        })
+        .catch(error => {
+          console.log(error.name, error.message);
+        });
     }
   }
 
@@ -38,7 +54,7 @@ export default class App extends PureComponent {
       return toast.warn('It seems to be the same search');
     }
 
-    this.setState({ query: searchQuery });
+    this.setState({ page: 1, query: searchQuery });
   };
 
   render() {
@@ -50,7 +66,6 @@ export default class App extends PureComponent {
         <ImageGallery pictures={pictures}></ImageGallery>
 
         <ToastContainer theme="dark" autoClose={1500} position="top-left" />
-        {/* <Modal></Modal> */}
       </Box>
     );
   }

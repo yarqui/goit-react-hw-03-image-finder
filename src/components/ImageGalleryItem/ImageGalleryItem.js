@@ -6,22 +6,41 @@ import { Item } from './ImageGalleryItem.styled';
 class GalleryItem extends PureComponent {
   state = {
     isModalOpen: false,
+    largeImg: '',
   };
 
-  showModal = () => {
-    this.setState({ isModalOpen: true });
+  showModal = largeImageURL => {
+    this.setState({ isModalOpen: true, largeImg: largeImageURL });
+  };
+
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
   };
 
   render() {
     const { pictures } = this.props;
-    const { isModalOpen } = this.state;
+    const { isModalOpen, largeImg } = this.state;
     return (
       <>
         {pictures.map(({ id, webformatURL, tags, largeImageURL }) => {
           return (
-            <Item key={id} onClick={this.showModal()}>
-              <ItemImage id={id} src={webformatURL} alt={tags} />
-              {isModalOpen && <Modal src={largeImageURL}></Modal>}
+            <Item key={id}>
+              <ItemImage
+                id={id}
+                src={webformatURL}
+                alt={tags}
+                loading="lazy"
+                onClick={() => {
+                  this.showModal(largeImageURL);
+                }}
+              />
+              {isModalOpen && (
+                <Modal
+                  url={largeImg}
+                  tags={tags}
+                  onCloseClick={this.closeModal}
+                ></Modal>
+              )}
             </Item>
           );
         })}
