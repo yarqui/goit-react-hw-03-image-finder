@@ -24,6 +24,6 @@ export const LoadMoreBtn = styled.button`
 
   :hover,
   :focus {
-    scale: 1.05;
+    scale: 1.02;
   }
 `;

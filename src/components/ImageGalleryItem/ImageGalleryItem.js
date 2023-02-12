@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import { PureComponent } from 'react';
 import { ItemImage } from './ImageGalleryItem.styled';
@@ -38,7 +39,7 @@ class GalleryItem extends PureComponent {
                 <Modal
                   url={largeImg}
                   tags={tags}
-                  onCloseClick={this.closeModal}
+                  onClose={this.closeModal}
                 ></Modal>
               )}
             </Item>
@@ -48,5 +49,9 @@ class GalleryItem extends PureComponent {
     );
   }
 }
+
+GalleryItem.propTypes = {
+  pictures: PropTypes.arrayOf(PropTypes.object.isRequired),
+};
 
 export default GalleryItem;

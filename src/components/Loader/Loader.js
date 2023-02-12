@@ -1,4 +1,3 @@
-import React from 'react';
 import { LoaderStyled } from './Loader.styled';
 
 const Loader = () => {

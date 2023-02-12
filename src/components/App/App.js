@@ -18,7 +18,6 @@ export default class App extends PureComponent {
   };
 
   async componentDidUpdate(_, prevState) {
-    console.log('componentDidUpdate');
     const { query, page, totalPages } = this.state;
 
     if (prevState.page !== page || prevState.query !== query) {
@@ -44,8 +43,6 @@ export default class App extends PureComponent {
 
           if (totalHits > 0) {
             const totalPages = Math.ceil(totalHits / 12);
-
-            console.log('totalPages:', totalPages);
 
             this.setState(prevState => {
               return {
@@ -148,26 +145,5 @@ export default class App extends PureComponent {
         </Box>
       );
     }
-
-    // if (status === 'rejected') {
-    //   return (
-    //     <Box>
-    //       <Searchbar onSubmit={this.onSubmit}></Searchbar>
-    //       <ToastContainer theme="dark" autoClose={1500} position="top-left" />
-    //     </Box>
-    //   );
-    // }
-
-    // return (
-    //   <Box>
-    //     <Searchbar onSubmit={this.onSubmit}></Searchbar>
-
-    //     <ImageGallery pictures={pictures}></ImageGallery>
-
-    //     {query && <Button loadMore={this.onLoadMore} />}
-
-    //     <ToastContainer theme="dark" autoClose={1500} position="top-left" />
-    //   </Box>
-    // );
   }
 }
